@@ -1,0 +1,24 @@
+
+Host *
+  UseRoaming no
+  ForwardAgent yes
+
+
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa_eagleshine
+
+
+Host github-Yahoo
+  HostName git.corp.yahoo.com
+  User git
+  IdentityFile ~/.ssh/id_rsa
+
+Host github-Oath
+  HostName git.ouroath.com
+  User git
+  IdentityFile ~/.ssh/id_rsa
+
+Host aws,*
+  ProxyCommand ~/.ssh/aws-proxycmd %h %p

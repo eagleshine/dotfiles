@@ -1,0 +1,65 @@
+maptimeout 5
+vbell off
+
+#escape /
+
+defscrollback 10000
+
+# hardstatus alwayslastline
+# caption always "%?%{ Wk}%-Lw%?%{Rk}%n*%f %t%?(%u)%?%?%{Wk}%+Lw%? %{Rk}%=%c %{rk}%d/%M/%Y"
+
+
+#hardstatus string "%{+b Rk}(%{-b g}$LOGNAME@%H%{+b R}) (%{-b g}%C %a%{+b R}) %{-b g} %n %t %h"
+#hardstatus alwayslastline "%{+b kr}[ %H ] %{ky} Load: %l %-=%{kb} %c  %d.%m.%Y"
+##hardstatus alwayslastline "%{+b kr}[ %H ] %{kw} Load: %l %-=%  %{kb} %c:%s  %d.%m.%Y "
+#hardstatus string '%{= kG}%{C}Screen: %{c}%{= kG}[%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{C} %d-%m %{W}%c %{g}]'
+
+
+
+# Fix for residual text
+altscreen on
+
+# erace background using current bg color
+defbce on
+
+# the fellowing copy from  ==========================================
+# https://github.com/rafmagana/screenrc/blob/master/.screenrc
+
+
+startup_message off
+
+# disable use of the "alternate" terminal
+# thus allowing scrollbars to function as normal in
+# many terminal emulators! <3 it
+termcapinfo xterm* ti@:te@
+
+# have screen update terminal emulators titlebar
+termcapinfo xterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+defhstatus "screen ^E (^Et) | $USER@^EH"
+
+shelltitle "$ |bash"
+
+
+# hardstatus alwayslastline
+# # hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+# hardstatus string '%{= kG}[ %{G}%H %{g}][ %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+
+defflow off
+
+#rvm needs this
+shell -${SHELL}
+
+
+backtick 1 60 60 $HOME/bin/screenrc.acpi  # .screenrc.acpi contains 1 line: acpi | awk -F ', ' '{print $2}'
+
+caption string "%?%F%{= Bk}%? %C%A %D %d-%m-%Y %{= kB} %t%= %?%F%{= Bk}%:%{= wk}%? %n "
+hardstatus alwayslastline
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %Y-%m-%d %{W}%D %{W}%c %{g}%1`%{-} %{g}]'
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %Y-%m-%d %{W}%D %{W}%c %{g}]'
+#hardstatus string '%{= kG}[ %{C}%H %{c}%{= kG}][ %{= kg}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{g}%?%+Lw%?%?%= %{g}][%{C} %Y-%m-%d %{W}%D %{C}%c %{g}]'
+hardstatus string '%{= kG}[ %{C}%H %{c}%{= kG}][ %{= kw}%?%-w%?%{= m}%n %t%?(%u)%?%{= w}%?%+w%?%?%= %{g}][%{C} %Y-%m-%d %{W}%D %{C}%c %{g}]'
+
+defshell -bash 
+
+# Have SSH within a screen session use the symlink
+setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
