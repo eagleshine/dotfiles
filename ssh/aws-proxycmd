@@ -1,0 +1,38 @@
+#!/usr/local/bin/bash
+
+# note: uses /usr/local/bin/bash (install with `brew install bash`), since
+# macOS's factory-default bash isn't new enough
+
+account=dev
+region=us-west-2
+
+sshHost="$1"
+port="$2"
+
+IFS=',' read -r -a parts <<< "$sshHost"
+
+#host=${parts[-1]}
+host=${parts[${#parts[@]}-1]}
+unset 'parts[${#parts[@]}-1]'
+
+
+for part in "${parts[@]}"; do
+    case "$part" in
+        dev|ga) account="$part" ;;
+        *-*-[0-9]) region="$part" ;;
+        aws) ;;
+        *)
+            printf 'unknown specifier: %s\n' "$part" >&2
+            exit 1
+            ;;
+    esac
+done
+
+domain="data-highway-aws-$account.aws.oath.cloud"
+bastion="bastion.${region}.$domain"
+
+[[ "$host" == .bastion ]] && host="$(dig +short $bastion)"
+
+printf 'Using bastion %s to [%s]:%s\n' "$bastion" "$host" "$port" >&2
+
+exec ssh -p 2222 -W "[$host]:$port" "$bastion"
